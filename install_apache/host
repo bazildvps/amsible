@@ -1,0 +1,6 @@
+[HOME_SERVERS]
+linux_mono ansible_host=192.168.0.104
+
+[AWS_INSTANCES]
+ubuntu ansible_host=
+amazon ansible_host=

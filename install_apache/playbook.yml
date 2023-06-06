@@ -1,0 +1,56 @@
+---
+- name: Install Apache and Upload my Web Page
+  hosts: HOME_SERVERS
+  become: true # стать рутом для playbook
+
+
+  vars: # задаем переменные
+    source_folder: /home/bazil/ansible/MyWebSite
+    destination_folder: /var/www/html
+
+
+  tasks: # перечисляем задания
+  - name: Check and print OS family
+    debug: var=ansible_os_family
+
+  - block: # This block for Debian family OS
+
+      - name: Install Apache Web Server for Debian family OS
+        apt: name=apache2 state=latest
+
+      - name: Start Web Server and make it start on boot for Debian family OS
+        service: name=apache2 state=started enabled=true
+
+    when: ansible_os_family == "Debian"   # Добавляем условия, выполнять этот блок если сервер поднят на дистрибутиве семейства Debian
+
+  - block: # This block for RedHat family OS
+
+      - name: Install Apache Web Server for RedHat family OS
+        yum: name=httpd state=latest
+
+      - name: Start Web Server and make it start on boot for RedHat family OS
+        service: name=httpd state=started enabled=true
+
+    when: ansible_os_family == "RedHat"   # Добавляем условия, выполнять этот блок если сервер поднят на дистрибутиве семейства RedHat
+
+  - name: Copy Website to Servers
+    copy: src={{ item }} dest={{ destination_folder }} mode=0555        # Так копируем все файлы из папки
+    with_fileglob: "{{ source_folder }}/*.*"
+#    copy: src={{ source_folder }}/{{ item }} dest={{ destination_folder }} mode=0555       # Так копируем только определенные файлы из папки
+#    loop:
+#      - "name of file"
+#      - "name of file"
+#      - "name of file"
+#      - "name of file"
+    notify:
+      - Restart Apache Debian # вызывает handlers если обновлен файл
+      - Restart Apache RedHat # вызывает handlers если обновлен файл
+
+  handlers: # используем handlers если нужно что-то сделать при определенном условии
+  - name: Restart Apache Debian
+    service: name=apache2 state=restarted
+    when: ansible_os_family == "Debian"   # Добавляем условия, выполнять этот блок если сервер поднят на дистрибутиве семейства Debian
+
+  - name: Restart Apache RedHat
+    service: name=httpd state=restarted
+    when: ansible_os_family == "RedHat"   # Добавляем условия, выполнять этот блок если сервер поднят на дистрибутиве семейства RedHat
