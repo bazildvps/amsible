@@ -6,14 +6,14 @@ properties([disableConcurrentBuilds()]) // Запретить одновреме
 pipeline {
     agent any 
     environment {
-    ANSIBLE_PRIVAT_KEY=credentials('aws_key')
+    ANSIBLE_PRIVATE_KEY=credentials('aws_keyfile')
 }
     stages {
         stage('Stage 1') {
             steps {
                 sh '''
                   cd install_apache
-                  ansible-playbook --privat-key=$ANSIBLE_PRIVAT_KEY playbook.yml
+                  ansible-playbook --private-key=$ANSIBLE_PRIVATE_KEY playbook.yml
                 '''
             }
         }
