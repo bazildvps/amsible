@@ -1,0 +1,16 @@
+#!groovy
+// Check hp (or IP address) properties
+properties([disableConcurrentBuilds()]) // Запретить одновременные задачи
+
+pipeline {
+    agent any 
+    stages {
+        stage('Stage 1') {
+            steps {
+                sh '''
+                  ls -la
+                '''
+            }
+        }
+    }
+}
