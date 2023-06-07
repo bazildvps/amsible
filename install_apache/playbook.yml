@@ -5,7 +5,7 @@
 
 
   vars: # задаем переменные
-    source_folder: /home/bazil/ansible/MyWebSite
+    source_folder: ./MyWebSite
     destination_folder: /var/www/html
 
 
@@ -34,7 +34,10 @@
     when: ansible_os_family == "RedHat"   # Добавляем условия, выполнять этот блок если сервер поднят на дистрибутиве семейства RedHat
 
   - name: Copy Website to Servers
-    copy: src={{ item }} dest={{ destination_folder }} mode=0555        # Так копируем все файлы из папки
+    copy: 
+      src={{ item }}
+      dest={{ destination_folder }}
+      mode=0555        # Так копируем все файлы из папки
     with_fileglob: "{{ source_folder }}/*.*"
 #    copy: src={{ source_folder }}/{{ item }} dest={{ destination_folder }} mode=0555       # Так копируем только определенные файлы из папки
 #    loop:
