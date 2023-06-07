@@ -2,16 +2,18 @@
 // Check hp (or IP address) properties
 properties([disableConcurrentBuilds()]) // Запретить одновременные задачи
 
+
 pipeline {
     agent any 
+    environment {
+    ANSIBLE_PRIVAT_KEY=credentials('aws_key')
+}
     stages {
         stage('Stage 1') {
             steps {
                 sh '''
-                  pwd
                   cd install_apache
-                  pwd
-                  ls -la /home/bazil/.ssh
+                  ansible-playbook --privat-key=$ANSIBLE_PRIVAT_KEY playbook.yml
                 '''
             }
         }
