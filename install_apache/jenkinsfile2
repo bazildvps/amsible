@@ -8,8 +8,10 @@ pipeline {
         stage('Stage 1') {
             steps {
                 sh '''
+                  pwd
                   cd install_apache
-                  ansible-playbook playbook.yml
+                  pwd
+                  ls -la /home/bazil/.ssh
                 '''
             }
         }
