@@ -1,6 +1,6 @@
 ---
 - name: Install Apache and Upload my Web Page
-  hosts: HOME_SERVERS
+  hosts: AWS
   become: true # стать рутом для playbook
 
 
