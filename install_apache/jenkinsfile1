@@ -1,5 +1,5 @@
 #!groovy
-// Check hp (or IP address) properties
+// Просто проверяем что все готово для работы
 properties([disableConcurrentBuilds()]) // Запретить одновременные задачи
 
 pipeline {
@@ -11,6 +11,7 @@ pipeline {
                   ansible --version
                   ansible-playbook --version
                   ansible-galaxy --version
+                  python3 --version
                 '''
             }
         }
