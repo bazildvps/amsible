@@ -2,5 +2,5 @@
 linux_mono ansible_host=192.168.0.104
 
 [AWS]
-ubuntu ansible_host=
+ubuntu ansible_host=52.59.208.208
 amazon ansible_host=
