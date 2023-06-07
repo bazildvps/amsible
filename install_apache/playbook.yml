@@ -5,7 +5,7 @@
 
 
   vars: # задаем переменные
-    source_folder: ./MyWebSite
+    source_folder: ../MyWebSite
     destination_folder: /var/www/html
 
 
